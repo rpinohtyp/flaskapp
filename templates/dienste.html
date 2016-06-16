@@ -58,13 +58,13 @@
                     <td><img src="/static/img/time.png" width="48" height="48"></td>
 					<td><form class="navbar-form navbar-left" action="/alarm" method="post">
 									<div class="form-group">
-                            <input type="submit" class="btn btn-default" value="handle alarm"></input>
+                            <input type="text" class="form-control" name="message" maxlength="128" placeholder="alarm time"></input>
+                        </div>
+                            <input type="submit" class="btn btn-default" value="set time"></input>
 							</form>
 					</td>
-					<td><form class="navbar-form navbar-left" action="/alarm" method="post">
-									<div class="form-group">
-                            <input type="submit" class="btn btn-default" value="handle alarm"></input>
-							</form>
+					<td>current Time: {{ hour }}:{{ minute }} <br>
+							{{ command }}
 					</td>
 	</tr>
             </tbody>

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 '''Flask file for Raspberry Pi'''
 
+from crontab import CronTab
+users_cron = CronTab(user='pi')
 import platform
 import datetime
 import os
@@ -13,6 +15,9 @@ from flask_bootstrap import Bootstrap
 
 APP = Flask(__name__)
 Bootstrap(APP)
+def getcronjob():
+	for job in users_cron.find_command('start_tuner'):
+		return job
 
 @APP.route('/')
 @APP.route('/main.html')
@@ -39,21 +44,25 @@ def stats():
 
 
 @APP.route('/dienste.html')
-def vnc():
-    user = os.getlogin()
-    node = platform.node()
-    try:
-        myip = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        myip.connect(('8.8.8.8', 80))
-        getip = myip.getsockname()[0]
-        myip.close()
-    except StandardError:
-        getip = "IP nicht erkannt"
-
-    showbutton = True
-    if os.path.exists('/home/'+user+'/.vnc/'+node+':1.pid'):
-        showbutton = None
-    return render_template('dienste.html', showbutton=showbutton, getip=getip)
+#def vnc():
+def dienste():
+	user = os.getlogin()
+	node = platform.node()
+	hour=getcronjob().hour
+	minute=getcronjob().minute
+	command=getcronjob().command
+	try:
+		myip = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+		myip.connect(('8.8.8.8', 80))
+		getip = myip.getsockname()[0]
+		myip.close()
+	except StandardError:
+		getip = "IP nicht erkannt"
+	showbutton = True
+	if os.path.exists('/home/'+user+'/.vnc/'+node+':1.pid'):
+		showbutton = None
+	#return render_template('dienste.html', showbutton=showbutton, getip=getip)
+	return render_template('/dienste.html', hour=hour,minute=minute,command=command)
 
 @APP.route('/<vncstatus>', methods=['POST'])
 def vncsteer(vncstatus):
@@ -73,9 +82,23 @@ def vncsteer(vncstatus):
     return redirect('/dienste.html')
 
 
-@APP.route('/alarm', methods=['POST'])
+@APP.route('/alarm', methods=['POST','GET'])
 def alarm():
-    return render_template('/alarm.html')
+	job = getcronjob()
+	msg=request.form['message']
+	hours = msg.split(':')[0]
+	minutes = msg.split(':')[1]
+	job.hour.on(hours)
+	job.minute.on(minutes)
+	users_cron.write()
+	hour=getcronjob().hour
+	minute=getcronjob().minute
+	command=job.command
+	return render_template('/dienste.html', hour=hour,minute=minute,command=command)
+
+
+
+
 @APP.route('/reboot', methods=['POST'])
 def reboot():
     passwd = request.form['password']
