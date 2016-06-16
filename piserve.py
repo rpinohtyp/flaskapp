@@ -73,6 +73,9 @@ def vncsteer(vncstatus):
     return redirect('/dienste.html')
 
 
+@APP.route('/alarm', methods=['POST'])
+def alarm():
+    return render_template('/alarm.html')
 @APP.route('/reboot', methods=['POST'])
 def reboot():
     passwd = request.form['password']

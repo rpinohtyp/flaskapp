@@ -16,7 +16,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <!--<tr>
                     <td><img src="/static/img/net.png" width="48" height="48"></td>
                     <td>{% if showbutton %}
                             <form class="navbar-form navbar-left" action="/startserver" method="post">
@@ -38,8 +38,8 @@
                             (Online)
                         {% endif %}
                     </td>
-                </tr>
-                <tr>
+			</tr>-->
+                <!--<tr>
                     <td><img src="/static/img/reboot.png" width="48" height="48"></td>
                     <td><form class="navbar-form navbar-left" action="/reboot" method="post">
                         <div class="form-group">
@@ -53,7 +53,20 @@
                         {% else %}
                             
                         {% endif %}</td>
-                </tr>
+		</tr>-->
+		<tr>
+                    <td><img src="/static/img/time.png" width="48" height="48"></td>
+					<td><form class="navbar-form navbar-left" action="/alarm" method="post">
+									<div class="form-group">
+                            <input type="submit" class="btn btn-default" value="handle alarm"></input>
+							</form>
+					</td>
+					<td><form class="navbar-form navbar-left" action="/alarm" method="post">
+									<div class="form-group">
+                            <input type="submit" class="btn btn-default" value="handle alarm"></input>
+							</form>
+					</td>
+	</tr>
             </tbody>
         </table>
     </div>
