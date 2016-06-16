@@ -26,7 +26,7 @@ def mainhtml():
 
 @APP.route('/stats.html')
 def stats():
-    today = datetime.date.today()
+    today = datetime.date.today().strftime("%d.%m.%y")
     system = platform.system()
     node = platform.node()
     arch = platform.machine()
