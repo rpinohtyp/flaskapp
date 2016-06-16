@@ -8,7 +8,7 @@ import datetime
 import os
 import subprocess
 import socket
-
+#receiver.raw('MVLDOWN')
 from flask import render_template, redirect, request
 from flask import Flask
 from flask_bootstrap import Bootstrap
@@ -30,9 +30,12 @@ def stats():
     system = platform.system()
     node = platform.node()
     arch = platform.machine()
-    user = os.getlogin()
-
-    space = os.statvfs('/home/'+user)
+    #if os.getlogin().none
+      #user = os.getlogin()
+    #else
+      #user = 'None'
+    user = 'None'
+    space = os.statvfs('/home/pi')
     freespace = (space.f_frsize * space.f_bavail)/1024/1024
 
     get_uptime = subprocess.Popen('uptime', stdout=subprocess.PIPE)
@@ -46,7 +49,7 @@ def stats():
 @APP.route('/dienste.html')
 #def vnc():
 def dienste():
-	user = os.getlogin()
+	#user = os.getlogin()
 	node = platform.node()
 	hour=getcronjob().hour
 	minute=getcronjob().minute
@@ -59,7 +62,7 @@ def dienste():
 	except StandardError:
 		getip = "IP nicht erkannt"
 	showbutton = True
-	if os.path.exists('/home/'+user+'/.vnc/'+node+':1.pid'):
+	if os.path.exists('/home/pi'+'/.vnc/'+node+':1.pid'):
 		showbutton = None
 	#return render_template('dienste.html', showbutton=showbutton, getip=getip)
 	return render_template('/dienste.html', hour=hour,minute=minute,command=command)
