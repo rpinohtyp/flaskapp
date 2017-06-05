@@ -104,7 +104,7 @@ def alarm():
 def voldown():
 	receiver = eiscp.eISCP('192.168.1.2')
 	volume = receiver.raw('MVLDOWN')
-	volume = re.findall(r'\d+',volume)
+	volume = re.findall(r'\d+',volume)[0]
 	receiver.disconnect()
 	return render_template('/dienste.html', volume=volume)
 @APP.route('/volup', methods=['POST','GET'])
