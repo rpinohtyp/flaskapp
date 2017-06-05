@@ -5,7 +5,7 @@ from crontab import CronTab
 users_cron = CronTab(user='pi')
 import platform
 import datetime
-import os
+import os, re
 import subprocess
 import socket
 #receiver.raw('MVLDOWN')
@@ -104,6 +104,7 @@ def alarm():
 def voldown():
 	receiver = eiscp.eISCP('192.168.1.2')
 	volume = receiver.raw('MVLDOWN')
+	volume = re.findall(r'\d+',volume)
 	receiver.disconnect()
 	return render_template('/dienste.html', volume=volume)
 @APP.route('/volup', methods=['POST','GET'])
