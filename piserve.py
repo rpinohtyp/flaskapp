@@ -111,7 +111,7 @@ def voldown():
 def volup():
 	receiver = eiscp.eISCP('192.168.1.2')
 	volume = receiver.raw('MVLUP')
-	volume = re.findall(r'\d+',volume)[0]
+	volume = int(re.findall(r'\d+',volume)[0],16)
 	receiver.disconnect()
 	return render_template('/dienste.html', volume=volume)
 
