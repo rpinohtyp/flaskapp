@@ -99,6 +99,9 @@ def alarm():
 	command=job.command
 	return render_template('/dienste.html', hour=hour,minute=minute,command=command)
 
+@APP.route('/voldown', methods=['POST','GET'])
+def voldown():
+	receiver.raw('MVLDOWN')
 
 
 
