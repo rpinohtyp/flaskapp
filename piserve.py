@@ -50,6 +50,10 @@ def stats():
 @APP.route('/dienste.html')
 #def vnc():
 def dienste():
+	receiver = eiscp.eISCP('192.168.1.2')
+	volume = receiver.raw('MVLQSTN')
+	volume = int(re.findall(r'\d+',volume)[0],16)
+	receiver.disconnect()
 	#user = os.getlogin()
 	node = platform.node()
 	hour=getcronjob().hour
@@ -66,7 +70,7 @@ def dienste():
 	if os.path.exists('/home/pi'+'/.vnc/'+node+':1.pid'):
 		showbutton = None
 	#return render_template('dienste.html', showbutton=showbutton, getip=getip)
-	return render_template('/dienste.html', hour=hour,minute=minute,command=command)
+	return render_template('/dienste.html', hour=hour,minute=minute,command=command, volume=volume)
 
 @APP.route('/<vncstatus>', methods=['POST'])
 def vncsteer(vncstatus):
