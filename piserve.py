@@ -105,7 +105,7 @@ def voldown():
 	receiver = eiscp.eISCP('192.168.1.2')
 	volume = receiver.raw('MVLDOWN')
 	receiver.disconnect()
-	return render_template('/dienste.html' volume=volume)
+	return render_template('/dienste.html', volume=volume)
 @APP.route('/volup', methods=['POST','GET'])
 def volup():
 	receiver = eiscp.eISCP('192.168.1.2')
