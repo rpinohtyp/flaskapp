@@ -9,6 +9,7 @@ import os
 import subprocess
 import socket
 #receiver.raw('MVLDOWN')
+import eiscp
 from flask import render_template, redirect, request
 from flask import Flask
 from flask_bootstrap import Bootstrap
@@ -101,7 +102,9 @@ def alarm():
 
 @APP.route('/voldown', methods=['POST','GET'])
 def voldown():
+	receiver = eiscp.eISCP('192.168.1.2')
 	receiver.raw('MVLDOWN')
+	receiver.disconnect()
 
 
 
