@@ -105,6 +105,7 @@ def voldown():
 	receiver = eiscp.eISCP('192.168.1.2')
 	receiver.raw('MVLDOWN')
 	receiver.disconnect()
+	-return render_template('/dienste.html')
 
 
 
